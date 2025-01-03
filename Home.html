@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>مترو الانفاق</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="author" content="Prasang Singhal, Paras Patidar, Vijay Deshwal">
+    <meta name="keywords" content="voyager, voyager.com, online tickets booking, flight tickets, bus tickets, train tickets">
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="icon" href="images/Logos/logo.ico" type="image">
+    <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Dancing+Script" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:500|Raleway:500" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Rammetto+One" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+<style>
+      header {
+    background-color: #007BFF;
+    padding: 20px;
+    color: white;
+    text-align: center;
+    font-family: 'Montserrat', sans-serif;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+header .logo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header .logo h1 {
+    font-size: 36px;
+    font-weight: bold;
+    margin: 0;
+}
+
+header .logo img.metro-logo {
+    width: 100px;
+    height: auto;
+    border-radius: 50%;
+}
+
+header .sociallist {
+    list-style: none;
+    display: flex;
+    gap: 15px;
+    padding: 0;
+}
+
+header .sociallist li {
+    font-size: 24px;
+    color: white;
+    cursor: pointer;
+}
+
+header .sociallist li:hover {
+    color: #0056b3;
+}
+
+header .navbar ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    padding: 0;
+}
+
+header .navbar li {
+    margin: 0 15px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+header .navbar a {
+    text-decoration: none;
+    color: white;
+    transition: color 0.3s ease;
+}
+
+header .navbar a:hover {
+    color: #0056b3;
+}
+
+header .Login {
+    padding: 10px 20px;
+    background: white;
+    color: #007BFF;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+header .Login:hover {
+    background: #0056b3;
+    color: white;
+}
+.hero-section {
+            text-align: center;
+            padding: 100px 20px;
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('images/metro-bg.jpg') no-repeat center center/cover;
+            color: white;
+        }
+
+        .hero-section h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .hero-section button {
+            padding: 10px 20px;
+            font-size: 1.2rem;
+            background: #ffc107;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .hero-section button:hover {
+            background: #e0a800;
+        }
+
+        .image-slider {
+            display: flex;
+            overflow: hidden;
+            white-space: nowrap;
+            margin: 80px 0;
+        }
+
+        .image-slider img {
+            width: 20%;
+            height: auto;
+            flex-shrink: 0;
+            transition: transform 0.8s ease;
+        }
+
+        @keyframes slide {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-100%); }
+        }
+
+        .image-slider {
+            animation: slide 30s linear infinite;
+        }
+        .image-map-container {
+    text-align: center; /* Centers the content horizontally */
+    margin-top: 40px; /* Adds margin between the sections */
+}
+
+.framed-image {
+    border: 5px solid #ffc107; /* Adds a border to the image (frame) */
+    border-radius: 15px; /* Optional: adds rounded corners to the border */
+    display: inline-block; /* Ensures the image behaves as an inline block */
+    margin: 0 auto; /* Centers the image inside the container */
+}
+.footer-content {
+    display: flex;              /* Aligns items side by side */
+    justify-content: center;    /* Centers the content horizontally */
+    align-items: center;        /* Aligns items vertically */
+}
+
+.footer-logo {
+    width: 40px;                /* Adjust the size of the logo */
+    height: auto;               /* Keep the aspect ratio */
+    margin-right: 10px;         /* Adds some space between the logo and the text */
+}
+
+footer {
+    text-align: center;         /* Center the content in the footer */
+}
+
+.metro-logo2 {
+    display: none; /* Hide the second metro logo if it's not needed */
+}
+
+</style>
+</head>
+
+<body class="bg">
+
+    <header>
+        <div class="logo">
+            <h1 class="voyager">مترو انفاق القاهره</h1>
+            <img src="images/logos/metro.png" alt="Metro Logo" class="metro-logo">
+
+           
+
+            <h3>افضل خدمه <span class="dot">.</span> تسهل عليك <span class="dot">.</span></h3>
+
+        </div>
+        
+        <div class="navbar">
+            <ul>
+                <a href="Home.html">
+                    <li>HOME</li>
+                </a>
+                <a href="https://ar.wikipedia.org/wiki/%D9%85%D8%AA%D8%B1%D9%88_%D8%A7%D9%84%D9%82%D8%A7%D9%87%D8%B1%D8%A9#:~:text=%D9%85%D8%AA%D8%B1%D9%88%20%D8%A3%D9%86%D9%81%D8%A7%D9%82%20%D8%A7%D9%84%D9%82%D8%A7%D9%87%D8%B1%D8%A9%20%D9%87%D9%88%20%D8%B4%D8%A8%D9%83%D8%A9,%D8%A7%D9%84%D8%AB%D8%A7%D9%84%D8%AB%20%D9%88%D8%A5%D9%86%D8%B4%D8%A7%D8%A1%20%D8%AE%D8%B7%20%D8%B1%D8%A7%D8%A8%D8%B9%20%D8%A5%D8%B6%D8%A7%D9%81%D9%8A">
+                    <li>NEWS</li>
+                </a>
+              
+                <a href="#contact">
+                    <li>Contact Us</li>
+                </a>
+                <a href="Login.html">
+                    <li>Login</li>
+                </a>
+
+            </ul>
+
+        </div>
+    </header>
+
+    <section class="hero-section">
+        <h1>مرحبا بك في مترو أنفاق القاهرة</h1>
+        <p>أفضل وسيلة نقل داخل القاهرة</p>
+        <a href="https://ar.wikipedia.org/wiki/%D9%85%D8%AA%D8%B1%D9%88_%D8%A7%D9%84%D9%82%D8%A7%D9%87%D8%B1%D8%A9#:~:text=%D9%85%D8%AA%D8%B1%D9%88%20%D8%A3%D9%86%D9%81%D8%A7%D9%82%20%D8%A7%D9%84%D9%82%D8%A7%D9%87%D8%B1%D8%A9%20%D9%87%D9%88%20%D8%B4%D8%A8%D9%83%D8%A9,%D8%A7%D9%84%D8%AB%D8%A7%D9%84%D8%AB%20%D9%88%D8%A5%D9%86%D8%B4%D8%A7%D8%A1%20%D8%AE%D8%B7%20%D8%B1%D8%A7%D8%A8%D8%B9%20%D8%A5%D8%B6%D8%A7%D9%81%D9%8A" target="_blank">اكتشف المزيد</a>
+    </section>
+<div id="BLOG" >
+    <section class="image-slider">
+        <img src="images/slider/1.jpg" alt="صورة 1">
+        <img src="images/slider/2.jpg" alt="صورة 2">
+        <img src="images/slider/3.webp" alt="صورة 3">
+        <img src="images/slider/4.jpg" alt="صورة 4">
+        <img src="images/slider/5.png" alt="صورة 5">     
+    </section>
+    
+    <section class="image-slider" style="margin-top: 40px;">
+        <img src="images/others/4.jpg" alt="صورة 11">
+        <img src="images/slider/6.jpg" alt="صورة 6">
+        <img src="images/slider/7.jpg" alt="صورة 7">
+        <img src="images/others/1.jpg" alt="صورة 8">
+        <img src="images/others/2.jpg" alt="صورة 9">
+        <img src="images/others/3.jpg" alt="صورة 10">
+    </section>
+</div>
+<div id="#NEW" >
+    <section class="image-map-container">
+        <img src="images/slider/map.jpg" alt="Interactive Image" usemap="#image-map" class="framed-image">
+        <map name="image-map">
+            <!-- Define interactive areas (coordinates can be adjusted as per your image) -->
+            <area shape="rect" coords="34,44,270,350" alt="Area 1" href="https://example.com" target="_blank">
+            <area shape="circle" coords="400,150,50" alt="Area 2" href="https://example.com" target="_blank">
+            <area shape="poly" coords="100,200,150,250,200,200" alt="Area 3" href="https://example.com" target="_blank">
+        </map>
+    </section>
+</div>
+
+    <a name="contact"></a>
+    <div id="contact" class="hoverable">
+
+        <h2 style="margin-top: 40px;">Contact Us</h2>
+        <p>Contact us and we'll get back to you within 24 hours</p>
+        <ul>
+            <li>Metro contact</li>
+            <li><img src="Images/call.png" class="align"> 16048</li>
+            <li><img src="Images/massahe.png" class="align"> contact.us@cairometro.gov.eg</li>
+        </ul>
+
+    </div>
+
+
+    <footer class="section teal darken-3">
+        <div class="footer-content">
+            <img src="images/logos/metro.png" alt="Metro Logo" class="footer-logo">
+            <p class="flow-text white-text center" style="font-family: Montserrat; font-size: 35px;">مترو أنفاق القاهرة &copy; 2025</p>            
+        </div>
+        <img src="images/logos/metro.png" alt="Metro Logo" class="metro-logo2">
+        <img src="images/metro-logo.png" alt="Metro Logo" class="metro-logo2">
+
+    </footer>
+    
+
+
+    <button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
+</body>
+</html>

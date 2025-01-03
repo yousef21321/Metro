@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>مترو الانفاق</title>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login & Signup Toggle Form</title>
+  <link rel="stylesheet" href="Login.css">
+  <link rel="icon" href="images/Logos/logo.ico" type="image">
+
+</head>
+<body>
+  <!-- Header Section -->
+  <header class="header">
+    <nav class="navbar">
+        <div class="logo">
+          <h1 class="voyager">مترو انفاق القاهره</h1>
+          <img src="images/logos/metro.png" alt="Metro Logo" class="metro-logo">
+
+         
+
+
+       </div>
+      <ul class="nav-links">
+        <li><a href="Home.html">Home</a></li>
+        <li><a href="blogger.html">About</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Main Content Section -->
+  <main class="container">
+    <div class="form-container">
+      <h1 class="form-title" id="form-title">Sign In</h1>
+      <form id="auth-form">
+        <div class="form-field">
+          <label for="email">Email</label>
+          <input type="email" id="email" placeholder="Enter your email" required />
+        </div>
+        <div class="form-field">
+          <label for="password">Password</label>
+          <input type="password" id="password" placeholder="Enter your password" required />
+        </div>
+        <div id="name-field" class="form-field" style="display: none;">
+          <label for="name">Name</label>
+          <input type="text" id="name" placeholder="Enter your name" />
+        </div>
+        <div id="age-field" class="form-field" style="display: none;">
+          <label for="age">Age</label>
+          <input type="number" id="age" placeholder="Enter your age" />
+        </div>
+        <div id="national-id-field" class="form-field" style="display: none;">
+          <label for="national-id">National ID</label>
+          <input type="text" id="national-id" placeholder="Enter your National ID" />
+        </div>
+        <div id="phone-field" class="form-field" style="display: none;">
+          <label for="phone">Phone</label>
+          <input type="text" id="phone" placeholder="Enter your phone number" />
+        </div>
+        <button type="submit" class="form-btn" id="form-btn">Sign In</button>
+      </form>
+      <p class="toggle-text">
+        Don't have an account? 
+        <span id="toggle-link" class="toggle-link">Sign Up</span>
+      </p>
+    </div>
+  </main>
+
+  <!-- Footer Section -->
+  <footer class="footer">
+    <div class="footer-content">
+      <p>&copy; 2024 MyWebsite. All rights reserved.</p>
+      <p>Follow us on: 
+        <a href="#">Facebook</a> | 
+        <a href="#">Twitter</a> | 
+        <a href="#">Instagram</a>
+      </p>
+    </div>
+  </footer>
+
+  <!-- JavaScript -->
+  <script>
+    const toggleLink = document.getElementById('toggle-link');
+    const formTitle = document.getElementById('form-title');
+    const authForm = document.getElementById('auth-form');
+    const formBtn = document.getElementById('form-btn');
+
+    let isSignup = false;
+
+    // Toggle between Sign In and Sign Up
+    toggleLink.addEventListener('click', () => {
+      isSignup = !isSignup;
+      if (isSignup) {
+        formTitle.textContent = 'Sign Up';
+        formBtn.textContent = 'Sign Up';
+        document.getElementById('name-field').style.display = 'block';
+        document.getElementById('age-field').style.display = 'block';
+        document.getElementById('national-id-field').style.display = 'block';
+        document.getElementById('phone-field').style.display = 'block';
+      } else {
+        formTitle.textContent = 'Sign In';
+        formBtn.textContent = 'Sign In';
+        document.getElementById('name-field').style.display = 'none';
+        document.getElementById('age-field').style.display = 'none';
+        document.getElementById('national-id-field').style.display = 'none';
+        document.getElementById('phone-field').style.display = 'none';
+      }
+    });
+
+    // Handle form submission (for both Sign In and Sign Up)
+    authForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+
+      if (isSignup) {
+        // Signup data collection
+        const name = document.getElementById('name').value;
+        const age = document.getElementById('age').value;
+        const nationalId = document.getElementById('national-id').value;
+        const phone = document.getElementById('phone').value;
+
+        const url = 'https://test.ofx-qrcode.com/api/signup';
+        const headers = {
+          'Content-Type': 'application/json',
+        };
+        const body = JSON.stringify({
+          name,
+          email,
+          password,
+          age,
+          national_id: nationalId,
+          phone,
+        });
+
+        const response = await fetch(url, {
+          method: 'POST',
+          headers,
+          body,
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          alert('Signup successful!');
+        } else {
+          alert('Error: ' + data.message);
+        }
+      } else {
+        // Login data collection
+        const url = 'https://test.ofx-qrcode.com/api/login';
+        const headers = {
+          'Content-Type': 'application/json',
+        };
+        const body = JSON.stringify({
+          email,
+          password,
+        });
+
+        const response = await fetch(url, {
+          method: 'POST',
+          headers,
+          body,
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          // Store the token and role in localStorage
+          localStorage.setItem('token', data.token);
+          localStorage.setItem('role', data.user.role);
+
+          alert('Login successful!');
+
+          // Redirect based on role
+          if (data.user.role === 'customer') {
+            window.location.href = 'index.html'; // Redirect to customer dashboard
+          } else if (data.user.role === 'admin') {
+            window.location.href = 'admin.html'; // Redirect to admin dashboard
+          } else {
+            alert('Unknown role: ' + data.user.role);
+          }
+        } else {
+          alert('Error: ' + data.message);
+        }
+      }
+    });
+  </script>
+</body>
+</html>

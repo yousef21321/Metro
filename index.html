@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>مترو الانفاق</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="author" content="Prasang Singhal, Paras Patidar, Vijay Deshwal">
+    <meta name="keywords" content="voyager, voyager.com, online tickets booking, flight tickets, bus tickets, train tickets">
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="icon" href="images/Logos/logo.ico" type="image">
+    <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Dancing+Script" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:500|Raleway:500" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Rammetto+One" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+    <style>
+      header {
+    background-color: #007BFF;
+    padding: 20px;
+    color: white;
+    text-align: center;
+    font-family: 'Montserrat', sans-serif;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+header .logo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header .logo h1 {
+    font-size: 36px;
+    font-weight: bold;
+    margin: 0;
+}
+
+header .logo img.metro-logo {
+    width: 130px;
+    height: auto;
+    border-radius: 50%;
+}
+
+header .sociallist {
+    list-style: none;
+    display: flex;
+    gap: 15px;
+    padding: 0;
+}
+
+header .sociallist li {
+    font-size: 24px;
+    color: white;
+    cursor: pointer;
+}
+
+header .sociallist li:hover {
+    color: #0056b3;
+}
+
+header .navbar ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    padding: 0;
+}
+
+header .navbar li {
+    margin: 0 15px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+header .navbar a {
+    text-decoration: none;
+    color: white;
+    transition: color 0.3s ease;
+}
+
+header .navbar a:hover {
+    color: #0056b3;
+}
+
+header .Login {
+    padding: 10px 20px;
+    background: white;
+    color: #007BFF;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+header .Login:hover {
+    background: #0056b3;
+    color: white;
+}
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+        .ticket-card {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            margin: 20px auto;
+        }
+        .ticket-image {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+        .ticket-info {
+            margin-top: 15px;
+        }
+        .ticket-info h2 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        .ticket-info p {
+            font-size: 16px;
+            color: #555;
+        }
+        .ticket-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+      
+        .error-message {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+        .btn-buy {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .btn-buy:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+
+<body class="bg">
+
+    <header>
+        <div class="logo">
+            <h1 class="voyager">مترو انفاق القاهره</h1>
+            <img src="images/logos/metro.png" alt="Metro Logo" class="metro-logo">
+
+           
+
+            <h3>افضل خدمه <span class="dot">.</span> تسهل عليك <span class="dot">.</span></h3>
+
+        </div>
+        
+        <div class="navbar">
+            <ul>
+                <a href="index.html">
+                    <li>HOME</li>
+                </a>
+          
+                <a href="https://cairometro.gov.eg/ar" target="_blank">
+                    <li>NEWS</li>
+                </a>
+                <a href="#contact">
+                    <li>Contact Us</li>
+                </a>
+                <button class="Login" id="logoutButton">Logout</button>
+                <ul class="sociallist">
+                    <a href="index.html">
+                        <li><i class="fa fa-instagram" aria-hidden="true"></i></li>
+                    </a>
+                    <a href="index.html">
+                        <li><i class="fa fa-facebook" aria-hidden="true"></i></li>
+                    </a>
+    
+                </ul>
+            </ul>
+
+        </div>
+    </header>
+
+    <div class="wtv">
+        <div class="welcome" style="text-align: center"> <span class="initial">Welcome to </span> <span class="last">Metro Cairo</span> </div>
+    </div>
+
+    <div class="container">
+        <!--Blockquote-->
+        <blockquote id="first">
+            “معنا لتقديم خدمه اسهل واوفر نتقدما سويا+”
+        </blockquote>
+    </div>
+    <!--Buttons-->
+
+    <div id="buttons">
+        <ul>
+            <a href="#ticket-container">
+                <li>تذاكر</li>
+            </a>
+            <a href="#hotels">
+                <li>الاشتراكات</li>
+            </a>
+
+
+        </ul>
+
+    </div>
+
+
+    <!--Buttons-->
+    <!--Cards-->
+    <div class="container">
+        <div id="ticket-container" class="ticket-container">
+            <!-- Ticket data will be injected here by JavaScript -->
+        </div>
+    </div>
+        
+        <div id="error-container"></div>
+    
+        <script>
+            // Ensure the DOM is fully loaded before executing the script
+            document.addEventListener('DOMContentLoaded', function() {
+                const token = localStorage.getItem('token'); // Replace 'authToken' with your actual token key
+    
+                if (token) {
+                    // Fetch ticket data from the API
+                    fetch('https://test.ofx-qrcode.com/api/tickets', {
+                        method: 'GET',
+                        headers: {
+                            'Authorization': `Bearer ${token}`,
+                            'Content-Type': 'application/json'
+                        }
+                    })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! Status: ${response.status}`);
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        const ticketContainer = document.getElementById('ticket-container');
+    
+                        // Loop through each ticket and create HTML content
+                        data.forEach(ticket => {
+                            const ticketCard = document.createElement('div');
+                            ticketCard.classList.add('ticket-card');
+    
+                            // Set the content for each ticket
+                            ticketCard.innerHTML = `
+                                <img src="${ticket.full_image_url || 'https://via.placeholder.com/400x200'}" alt="Ticket Image" class="ticket-image">
+                                <div class="ticket-info">
+                                    <h2>Ticket Name: ${ticket.name}</h2>
+                                    <p><strong>عدد المحطات:</strong> ${ticket.stations_count}</p>
+                                    <p><strong>السعر:</strong> $${ticket.price} جنيه</p>
+                                   
+                                </div>
+                                <button class="buy-button" data-ticket-id="${ticket.id}" data-ticket-image="${ticket.full_image_url}">شراء</button>
+                            `;
+    
+                            // Append the ticket card to the container
+                            ticketContainer.appendChild(ticketCard);
+                        });
+    
+                        // Attach event listener for "شراء" button
+                        document.querySelectorAll('.buy-button').forEach(button => {
+                            button.addEventListener('click', function() {
+                                const ticketId = this.getAttribute('data-ticket-id');
+                                const ticketImage = this.getAttribute('data-ticket-image');
+    
+                                // Save the ticket ID and image URL to localStorage
+                                localStorage.setItem('ticket_id', ticketId);
+                                localStorage.setItem('ticketImage', ticketImage);
+    
+                                // Navigate to the confirmSubscribe.html page
+                                window.location.href = 'confirmSubscribe.html';
+                            });
+                        });
+                    })
+                    .catch(error => {
+                        console.error('Error fetching ticket data:', error);
+                        // Display an error message or handle the error
+                    });
+                } else {
+                    console.error('No auth token found in localStorage.');
+                }
+            });
+        </script>
+        <!--End of flights-->
+
+        <!--Hotels-->
+        <a name="hotels"></a><br>
+        <h4 id="category" class="hotels">الاشتراكات</h4>
+        <div class="row"  id="cardContainer">
+
+           
+        </div>
+        <!--End of hotels-->
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const token = localStorage.getItem('token');
+                const cardContainer = document.getElementById('cardContainer');
+    
+                fetch('https://test.ofx-qrcode.com/api/cards/user', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    data.forEach(card => {
+                        const cardElement = `
+                            <div class="col s4 hoverable">
+                                <div class="card medium">
+                                    <div class="card-image">
+                                        <img src="images/2.jpg" alt="Card Image">
+                                    </div>
+                                    <div class="card-content">
+                                        <span class="card-title"> ${card.type}نوع  </span>
+                                        <spanclass="card-title">تاريخ الصلاحيه: ${card.expires_at}</span>
+                                            <span><p class="makebold">عدد التذاكر: ${card.remaining_tickets}</p></span>
+
+                                    </div>
+                                    <div class="card-action red darken-4">
+                                        <a href="confirmTicket.html" class="white-text">VIEW</a>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                        cardContainer.innerHTML += cardElement;
+                    });
+                })
+                .catch(error => console.error('Error:', error));
+            });
+        </script>
+        <!--Bus-->
+
+        <a name="metro-cards"></a><br>
+        <h4 id="category" class="metro-cards">الكروت الإلكترونية لمترو أنفاق مصر</h4>
+        <div class="row" style="margin-top: 50px;" id="metro-cards">
+    
+            <div class="col s3 m4">
+                <div class="card grey lighten-3 hoverable">
+                    <div class="card-content black-text">
+                        <span class="card-title">كارت 16 رحلة</span>
+                        <p>صالحة لمدة شهر | الخطوط الثلاثة</p><br>
+                        <p class="makebold">50 جنيه<sup>*</sup></p>
+                    </div>
+                    <div class="card-action">
+                        <a href="cradetCard3.html" onclick="saveTripNumber(16)">شراء</a>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="col s3 m4">
+                <div class="card grey lighten-3 hoverable">
+                    <div class="card-content black-text">
+                        <span class="card-title">كارت 25 رحلة</span>
+                        <p>صالحة لمدة شهر | الخطوط الثلاثة</p><br>
+                        <p class="makebold">100 جنيه<sup>*</sup></p>
+                    </div>
+                    <div class="card-action">
+                        <a href="cradetCard3.html" onclick="saveTripNumber(25)">شراء</a>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="col s3 m4">
+                <div class="card grey lighten-3 hoverable">
+                    <div class="card-content black-text">
+                        <span class="card-title">كارت 44 رحلة</span>
+                        <p>صالحة لمدة شهر | الخطوط الثلاثة</p><br>
+                        <p class="makebold">185 جنيه<sup>*</sup></p>
+                    </div>
+                    <div class="card-action">
+                        <a href="cradetCard3.html" onclick="saveTripNumber(44)">شراء</a>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="col s3 m4">
+                <div class="card grey lighten-3 hoverable">
+                    <div class="card-content black-text">
+                        <span class="card-title">كارت اشتراك شهري</span>
+                        <p>عدد لا محدود من الرحلات | صالح لمدة شهر</p><br>
+                        <p class="makebold">250 جنيه<sup>*</sup></p>
+                    </div>
+                    <div class="card-action">
+                        <a href="cradetCard3.html" onclick="saveTripNumber('اشتراك')">شراء</a>
+                    </div>
+                </div>
+            </div>
+    
+           
+    
+        </div>
+    
+        <script>
+            // Function to save the trip number to localStorage
+            function saveTripNumber(tripNumber) {
+                localStorage.setItem("remaining_tickets", tripNumber);
+            }
+        </script>
+
+        <!--End of bus-->
+
+
+    <a name="contact"></a>
+    <div id="contact" class="hoverable">
+
+        <h2 style="margin-top: 40px;">Contact Us</h2>
+        <p>Contact us and we'll get back to you within 24 hours</p>
+        <ul>
+            <li>Metro contact</li>
+            <li><img src="Images/call.png" class="align"> 16048</li>
+            <li><img src="Images/massahe.png" class="align"> contact.us@cairometro.gov.eg</li>
+        </ul>
+
+
+    </div>
+
+
+
+
+    <button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
+    <script src="js/index.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+    <script>
+        document.getElementById('bookButton').addEventListener('click', function () {
+          // Redirect to the new page with query parameters for the card details
+          const imageSrc = document.getElementById('cardImage').src;
+          const cardTitle = document.getElementById('cardTitle').textContent;
+          const price = document.querySelector('.makebold').textContent;
+    
+          const url = `new-page.html?image=${encodeURIComponent(imageSrc)}&title=${encodeURIComponent(cardTitle)}&price=${encodeURIComponent(price)}`;
+          window.location.href = url;
+        });
+
+
+
+       
+      </script>
+    <script> document.getElementById('logoutButton').addEventListener('click', function() {
+        // Clear all data from localStorage
+        localStorage.clear();
+        
+        // Optionally, redirect the user to a login page or home page
+        alert('You have logged out successfully, and all data has been cleared.');
+        window.location.href = 'Login.html'; // Adjust the URL to your login page
+    });</script>
+</body>
+
+</html>

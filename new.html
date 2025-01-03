@@ -1,0 +1,101 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Messages Table</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f9;
+      margin: 0;
+      padding: 0;
+    }
+    h1 {
+      text-align: center;
+      margin: 20px 0;
+      color: #333;
+    }
+    .table-container {
+      max-width: 800px;
+      margin: 20px auto;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    table th, table td {
+      border: 1px solid #ddd;
+      padding: 10px;
+      text-align: left;
+    }
+    table th {
+      background-color: #007BFF;
+      color: #fff;
+    }
+    table tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+    table tr:hover {
+      background-color: #f1f1f1;
+    }
+  </style>
+</head>
+<body>
+  <h1>Messages Table</h1>
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Message</th>
+          <th>Created At</th>
+        </tr>
+      </thead>
+      <tbody id="messages-body">
+        <!-- Rows will be dynamically added here -->
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    // Fetch messages from the API
+    async function fetchMessages() {
+      try {
+        const response = await fetch('https://leader-acadmy.hwnix.com/api/getmessages');
+        const data = await response.json();
+
+        // Check if data is an array
+        if (Array.isArray(data)) {
+          const tbody = document.getElementById('messages-body');
+          tbody.innerHTML = ''; // Clear previous rows
+
+          data.forEach((message) => {
+            const row = document.createElement('tr');
+
+            row.innerHTML = `
+              <td>${message.id}</td>
+              <td>${message.message}</td>
+              <td>${message.created_at}</td>
+            `;
+
+            tbody.appendChild(row);
+          });
+        } else {
+          console.error('Unexpected data format:', data);
+        }
+      } catch (error) {
+        console.error('Error fetching messages:', error);
+      }
+    }
+
+    // Load messages when the page loads
+    window.onload = fetchMessages;
+  </script>
+</body>
+</html>

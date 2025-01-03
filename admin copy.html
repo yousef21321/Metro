@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="ar">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | مترو أنفاق القاهرة</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+
+<body>
+    <header>
+        <h1>مترو أنفاق القاهرة - لوحة التحكم</h1>
+        <div>
+            <i class="fa fa-user-circle"></i> مرحبًا، أدمن
+        </div>
+    </header>
+
+    <div class="sidebar">
+        <ul>
+            <li onclick="showSection('tickets')">
+                <i class="fa fa-ticket-alt"></i> إدارة التذاكر
+            </li>
+            <li onclick="showSection('addTicket')">
+                <i class="fa fa-plus"></i> إضافة تذاكر
+            </li>
+            <li onclick="showSection('subscriptions')">
+                <i class="fa fa-id-card"></i> إدارة الاشتراكات
+            </li>
+            <li onclick="showSection('wallet')">
+                <i class="fa fa-wallet"></i> إدارة المحافظ
+            </li>
+            <li onclick="showSection('allTickets')">
+                <i class="fa fa-ticket-alt"></i> التذاكر
+            </li>
+        </ul>
+    </div>
+
+    <div class="main-content">
+        <!-- Manage Tickets Section -->
+        <div id="tickets" class="card">
+            <h3>إدارة التذاكر</h3>
+            <p>هنا يمكنك تأكيد أو رفض طلبات شراء التذاكر.</p>
+            <table id="ticketsTable">
+                <tr>
+                    <th>رقم التذكرة</th>
+                    <th>اسم العميل</th>
+                    <th>تاريخ الحجز</th>
+                    <th>عدد المحطات</th>
+                    <th>الدفع</th>
+                    <th>الحالة</th>
+                    <th>إجراءات</th>
+                </tr>
+                <!-- Rows will be populated here -->
+            </table>
+        </div>
+
+        <!-- All Tickets Section -->
+        <div id="allTickets" class="card" style="display: none;">
+            <h3>التذاكر</h3>
+            <p>هنا يمكنك مشاهدة جميع التذاكر المسجلة.</p>
+            <table id="allTicketsTable">
+                <tr>
+                    <th>رقم التذكرة</th>
+                    <th>اسم</th>
+                    <th>عدد المحطات</th>
+                    <th>السعر</th>
+                    <th>الصوره</th>
+                    <th>تاريخ الإنشاء</th>
+                </tr>
+                <!-- Rows will be populated here -->
+            </table>
+        </div>
+
+        <!-- Add Ticket Section -->
+        <div id="addTicket" class="card" style="display: none;">
+            <h3>إضافة تذكرة جديدة</h3>
+            <form id="addTicketForm" enctype="multipart/form-data">
+                <label for="name">الاسم</label>
+                <input type="text" id="name" name="name" required>
+
+                <label for="stations_count">عدد المحطات</label>
+                <input type="number" id="stations_count" name="stations_count" required>
+
+                <label for="price">السعر</label>
+                <input type="number" id="price" name="price" required>
+
+                <label for="image">الصورة</label>
+                <input type="file" id="image" name="image" required>
+
+                <button type="submit" class="btn">إضافة التذكرة</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Show the corresponding section
+        function showSection(section) {
+            document.getElementById('tickets').style.display = 'none';
+            document.getElementById('subscriptions').style.display = 'none';
+            document.getElementById('wallet').style.display = 'none';
+            document.getElementById('addTicket').style.display = 'none';
+            document.getElementById('allTickets').style.display = 'none';
+
+            document.getElementById(section).style.display = 'block';
+        }
+
+        // Fetch and populate ticket data for "إدارة التذاكر"
+        async function fetchTickets() {
+            const token = localStorage.getItem('token');
+            try {
+                const response = await axios.get('https://test.ofx-qrcode.com/api/tickets/all/users', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                const tickets = response.data;
+                const ticketsTable = document.getElementById('ticketsTable');
+                ticketsTable.innerHTML = `
+                    <tr>
+                        <th>رقم التذكرة</th>
+                        <th>اسم العميل</th>
+                        <th>تاريخ الحجز</th>
+                        <th>عدد المحطات</th>
+                        <th>الدفع</th>
+                        <th>الحالة</th>
+                        <th>إجراءات</th>
+                    </tr>
+                `;
+                tickets.forEach(ticket => {
+                    ticket.user.forEach(user => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${ticket.id}</td>
+                            <td>${user.name}</td>
+                            <td>${ticket.created_at}</td>
+                            <td>${ticket.stations_count}</td>
+                            <td>${user.pivot.status_of_payment}</td>
+                            <td>${user.pivot.status_of_received > 0 ? 'تم التأكيد' : 'قيد الانتظار'}</td>
+                            <td>
+                                <button class="btn" onclick="updateTicketStatus(${ticket.id})">تحديث الحالة</button>
+                                <button class="btn-delete" onclick="deleteTicket(${ticket.id})">حذف</button>
+                            </td>
+                        `;
+                        ticketsTable.appendChild(row);
+                    });
+                });
+            } catch (error) {
+                console.error('Error fetching tickets:', error);
+            }
+        }
+
+        // Fetch and populate ticket data for "التذاكر"
+        async function fetchAllTickets() {
+            const token = localStorage.getItem('token');
+            try {
+                const response = await axios.get('https://test.ofx-qrcode.com/api/tickets', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                const tickets = response.data;
+                const ticketsTable = document.getElementById('allTicketsTable');
+                ticketsTable.innerHTML = `
+                    <tr>
+                        <th>رقم التذكرة</th>
+                        <th>اسم</th>
+                        <th>عدد المحطات</th>
+                        <th>السعر</th>
+                        <th>الصوره</th>
+                        <th>تاريخ الإنشاء</th>
+                    </tr>
+                `;
+                tickets.forEach(ticket => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${ticket.id}</td>
+                        <td>${ticket.name}</td>
+                        <td>${ticket.stations_count}</td>
+                        <td>${ticket.price} جنيه</td>
+                        <td>${ticket.image ? `<img src="${ticket.image}" alt="Ticket Image" width="50">` : 'لا يوجد صورة'}</td>
+                        <td>${new Date(ticket.created_at).toLocaleString('ar-EG')}</td>
+                    `;
+                    ticketsTable.appendChild(row);
+                });
+            } catch (error) {
+                console.error('Error fetching all tickets:', error);
+            }
+        }
+
+        fetchTickets();
+        fetchAllTickets();
+    </script>
+</body>
+
+</html>

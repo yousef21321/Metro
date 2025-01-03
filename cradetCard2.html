@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="ar">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الدفع بالبطاقة الائتمانية</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .payment-container {
+            background: #fff;
+            width: 400px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            position: relative;
+        }
+
+        .payment-container h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .form-group input:focus {
+            border-color: #1e90ff;
+            outline: none;
+        }
+
+        .btn {
+            background-color: #1e90ff;
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 10px;
+            font-size: 18px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #155b9f;
+        }
+
+        .message {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 18px;
+        }
+
+        .message.success {
+            color: green;
+        }
+
+        .message.error {
+            color: red;
+        }
+
+        .card-icons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .card-icons i {
+            font-size: 30px;
+            color: #888;
+        }
+
+        /* شريط ملون يظهر عند النجاح */
+        .success-bar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, #32CD32, #008000);
+            animation: slideDown 2s ease-out forwards;
+            opacity: 0;
+        }
+
+        @keyframes slideDown {
+            0% {
+                top: -5px;
+                opacity: 0;
+            }
+            100% {
+                top: 0;
+                opacity: 1;
+            }
+        }
+
+        /* تأثير فقاعة */
+        .bubble {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #32CD32;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 18px;
+            opacity: 0;
+            animation: bubbleEffect 1.5s ease-out forwards;
+        }
+
+        @keyframes bubbleEffect {
+            0% {
+                bottom: 10px;
+                opacity: 0;
+                transform: translateX(-50%) scale(0);
+            }
+            100% {
+                bottom: 80px;
+                opacity: 1;
+                transform: translateX(-50%) scale(1);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="payment-container">
+        <h2>الدفع بالبطاقة الائتمانية</h2>
+        <form id="paymentForm">
+            <div class="form-group">
+                <label for="cardNumber">رقم البطاقة</label>
+                <input type="text" id="cardNumber" maxlength="16" placeholder="1234 5678 9101 1121" required>
+            </div>
+            <div class="form-group">
+                <label for="cardHolder">اسم حامل البطاقة</label>
+                <input type="text" id="cardHolder" placeholder="الاسم كما هو مكتوب على البطاقة" required>
+            </div>
+            <div class="form-group">
+                <label for="expiryDate">تاريخ الانتهاء</label>
+                <input type="text" id="expiryDate" maxlength="5" placeholder="MM/YY" required>
+            </div>
+            <div class="form-group">
+                <label for="cvv">رمز CVV</label>
+                <input type="text" id="cvv" maxlength="3" placeholder="123" required>
+            </div>
+            <div class="form-group expires_at">
+                <label for="expiresAt">تاريخ الانتهاء الجديد</label>
+                <input type="date" id="expiresAt" required>
+            </div>
+            <button type="submit" class="btn">دفع</button>
+        </form>
+        <div class="card-icons">
+            <i class="fab fa-cc-visa"></i>
+            <i class="fab fa-cc-mastercard"></i>
+            <i class="fab fa-cc-amex"></i>
+        </div>
+        <div id="message" class="message"></div>
+        <div id="successBar" class="success-bar"></div>
+    </div>
+
+    <script>
+        document.getElementById('paymentForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            // Dummy data for card validation
+            const validCard = '1234567890123456';
+            const validName = 'Yousef Abdo';
+            const validExpiry = '12/25';
+            const validCvv = '123';
+
+            // Inputs
+            const cardNumber = document.getElementById('cardNumber').value.trim();
+            const cardHolder = document.getElementById('cardHolder').value.trim();
+            const expiryDate = document.getElementById('expiryDate').value.trim();
+            const cvv = document.getElementById('cvv').value.trim();
+            const expiresAt = document.getElementById('expiresAt').value.trim();
+
+            const messageDiv = document.getElementById('message');
+            const successBar = document.getElementById('successBar');
+
+            // Validate card details
+            if (
+                cardNumber === validCard &&
+                cardHolder === validName &&
+                expiryDate === validExpiry &&
+                cvv === validCvv
+            ) {
+                // Success message
+                messageDiv.textContent = 'تمت عملية الدفع بنجاح!';
+                messageDiv.className = 'message success';
+
+                // Show success bar
+                successBar.style.opacity = 1;
+
+                // Show bubble effect
+                const bubble = document.createElement('div');
+                bubble.classList.add('bubble');
+                bubble.textContent = 'تمت عملية الدفع بنجاح!';
+                document.body.appendChild(bubble);
+
+                // Remove the bubble after animation ends
+                setTimeout(() => {
+                    bubble.remove();
+                }, 2000);
+
+                // Call renewCard API
+                await renewCard(expiresAt);
+            } else {
+                messageDiv.textContent = 'فشل في عملية الدفع. يرجى التحقق من البيانات.';
+                messageDiv.className = 'message error';
+            }
+        });
+
+        async function renewCard(expiresAt) {
+            const requestBody = { expires_at: expiresAt };
+
+            try {
+                // Get token from localStorage
+                const token = localStorage.getItem('token');
+
+                // Send POST request to the new API
+                const response = await fetch('https://test.ofx-qrcode.com/api/cards/renew/user', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(requestBody)
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    alert('تم تجديد البطاقة بنجاح! شكراً لك.');
+                    window.location.href = 'index.html';
+
+                } else {
+                    alert('حدث خطأ أثناء تجديد البطاقة. يرجى المحاولة مرة أخرى.');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('حدث خطأ في الاتصال. يرجى المحاولة لاحقاً.');
+            }
+        }
+    </script>
+</body>
+
+</html>
