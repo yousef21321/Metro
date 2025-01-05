@@ -122,7 +122,7 @@
         const nationalId = document.getElementById('national-id').value;
         const phone = document.getElementById('phone').value;
 
-        const url = 'https://test.ofx-qrcode.com/api/signup';
+        const url = 'http://127.0.0.1:8000/api/signup';
         const headers = {
           'Content-Type': 'application/json',
         };
@@ -150,7 +150,7 @@
         }
       } else {
         // Login data collection
-        const url = 'https://test.ofx-qrcode.com/api/login';
+        const url = 'http://127.0.0.1:8000/api/login';
         const headers = {
           'Content-Type': 'application/json',
         };

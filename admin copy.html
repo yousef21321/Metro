@@ -112,7 +112,7 @@
         async function fetchTickets() {
             const token = localStorage.getItem('token');
             try {
-                const response = await axios.get('https://test.ofx-qrcode.com/api/tickets/all/users', {
+                const response = await axios.get('http://127.0.0.1:8000/api/tickets/all/users', {
                     headers: {
                         'Authorization': `Bearer ${token}`
                     }
@@ -157,7 +157,7 @@
         async function fetchAllTickets() {
             const token = localStorage.getItem('token');
             try {
-                const response = await axios.get('https://test.ofx-qrcode.com/api/tickets', {
+                const response = await axios.get('http://127.0.0.1:8000/api/tickets', {
                     headers: {
                         'Authorization': `Bearer ${token}`
                     }

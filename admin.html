@@ -158,10 +158,10 @@
                     <th>ID</th>
                     <th>رقم التذكرة</th>
                     <th>اسم العميل</th>
+                    <th>رقم البطاقه</th>
                     <th>تاريخ الحجز</th>
                     <th>عدد المحطات</th>
                     <th>عدد التذاكر</th>
-
                     <th>الدفع</th>
                     <th>الحالة</th>
                     <th>إجراءات</th>
@@ -311,7 +311,7 @@
         async function fetchTickets() {
             const token = localStorage.getItem('token');  // Assuming token is stored in localStorage
             try {
-                const response = await axios.get('https://test.ofx-qrcode.com/api/tickets/user/all', {
+                const response = await axios.get('http://127.0.0.1:8000/api/tickets/user/all', {
                     headers: {
                         'Authorization': `Bearer ${token}`
                     }
@@ -326,6 +326,7 @@
                         <th>ID</th>
                         <th>رقم التذكرة</th>
                         <th>اسم العميل</th>
+                        <th>رقم البطاقه</th>
                         <th>تاريخ الحجز</th>
                         <th>عدد المحطات</th>
                         <th>عدد التذاكر</th>
@@ -342,6 +343,8 @@
                             <td>${user.pivot.id}</td>
                             <td>${ticket.id}</td>
                             <td>${user.name}</td>
+                            <td>${user.national_id}</td>
+
                             <td>${ticket.created_at}</td>
                             <td>${ticket.stations_count}</td>
                             <td>${user.pivot.count}</td>
@@ -364,7 +367,7 @@
 async function fetchBranch() {
     const token = localStorage.getItem('token');  // Assuming token is stored in localStorage
     try {
-        const response = await axios.get('https://test.ofx-qrcode.com/api/branches', {
+        const response = await axios.get('http://127.0.0.1:8000/api/branches', {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
@@ -411,7 +414,7 @@ fetchBranch();
     const ticketId = localStorage.getItem('TicketId');
 
     try {
-        const response = await axios.post(`https://test.ofx-qrcode.com/api/tickets/${ticketId}`, updatedTicketData, {
+        const response = await axios.post(`http://127.0.0.1:8000/api/tickets/${ticketId}`, updatedTicketData, {
             headers: {
                 'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json',
@@ -435,7 +438,7 @@ fetchBranch();
 async function fetchAllTickets() {
     const token = localStorage.getItem('token');
     try {
-        const response = await axios.get('https://test.ofx-qrcode.com/api/tickets', {
+        const response = await axios.get('http://127.0.0.1:8000/api/tickets', {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
@@ -486,7 +489,7 @@ function showUpdateTicketForm(ticket) {
 
         async function updateTicketStatus(ticketId) {
             const token = localStorage.getItem('token');
-            const response = await fetch(`https://test.ofx-qrcode.com/api/tickets/user/approve-status/${ticketId}`, {
+            const response = await fetch(`http://127.0.0.1:8000/api/tickets/user/approve-status/${ticketId}`, {
                 method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${token}`,
@@ -507,7 +510,7 @@ function showUpdateTicketForm(ticket) {
             const token = localStorage.getItem('token');
             if (confirm('هل أنت متأكد من أنك تريد حذف هذه التذكرة؟')) {
                 try {
-                    const response = await axios.delete(`https://test.ofx-qrcode.com/api/tickets/user/${ticketId}`, {
+                    const response = await axios.delete(`http://127.0.0.1:8000/api/tickets/user/${ticketId}`, {
                         headers: {
                             'Authorization': `Bearer ${token}`
                         }
@@ -538,7 +541,7 @@ function showUpdateTicketForm(ticket) {
             const token = localStorage.getItem('token');
 
             try {
-                const response = await axios.post('https://test.ofx-qrcode.com/api/tickets', formData, {
+                const response = await axios.post('http://127.0.0.1:8000/api/tickets', formData, {
                     headers: {
                         'Authorization': `Bearer ${token}`,
                         'Content-Type': 'multipart/form-data'
@@ -574,7 +577,7 @@ function showUpdateTicketForm(ticket) {
                 const token = localStorage.getItem('token');
 
                 // Make POST request to the API
-                const response = await fetch('https://test.ofx-qrcode.com/api/cards', {
+                const response = await fetch('http://127.0.0.1:8000/api/cards', {
                     method: 'POST',
                     headers: {
                         'Authorization': `Bearer ${token}`,
@@ -603,7 +606,7 @@ function showUpdateTicketForm(ticket) {
         try {
             const token = localStorage.getItem('token');
 
-            const response = await fetch('https://test.ofx-qrcode.com/api/cards', { headers: {
+            const response = await fetch('http://127.0.0.1:8000/api/cards', { headers: {
                         'Authorization': `Bearer ${token}`,
                         'Content-Type': 'application/json'
                     },
@@ -649,7 +652,7 @@ function showUpdateTicketForm(ticket) {
         if (!confirmDelete) return;
 
         try {
-            const response = await fetch(`https://test.ofx-qrcode.com/api/cards/${id}`, {
+            const response = await fetch(`http://127.0.0.1:8000/api/cards/${id}`, {
                 method: 'DELETE',
             });
 

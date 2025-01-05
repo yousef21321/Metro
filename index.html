@@ -192,6 +192,9 @@ header .Login:hover {
                 <a href="#contact">
                     <li>Contact Us</li>
                 </a>
+                <a href="#Branch">
+                    <li>الفروع المتاحه</li>
+                </a>
                 <button class="Login" id="logoutButton">Logout</button>
                 <ul class="sociallist">
                     <a href="index.html">
@@ -251,7 +254,7 @@ header .Login:hover {
     
                 if (token) {
                     // Fetch ticket data from the API
-                    fetch('https://test.ofx-qrcode.com/api/tickets', {
+                    fetch('http://127.0.0.1:8000/api/tickets', {
                         method: 'GET',
                         headers: {
                             'Authorization': `Bearer ${token}`,
@@ -327,7 +330,7 @@ header .Login:hover {
                 const token = localStorage.getItem('token');
                 const cardContainer = document.getElementById('cardContainer');
     
-                fetch('https://test.ofx-qrcode.com/api/cards/user', {
+                fetch('http://127.0.0.1:8000/api/cards/user', {
                     method: 'GET',
                     headers: {
                         'Authorization': `Bearer ${token}`,
@@ -429,6 +432,54 @@ header .Login:hover {
                 localStorage.setItem("remaining_tickets", tripNumber);
             }
         </script>
+ <div id="Branch" class="card">
+    <h3>الفروع</h3>
+    <table id="branchesTable">
+        <tr>
+            <th>اسم الفرع</th>
+            <th>العنوان</th>
+        </tr>
+    </table>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+async function fetchBranch() {
+    const token = localStorage.getItem('token');  // Assuming token is stored in localStorage
+    try {
+        const response = await axios.get('http://127.0.0.1:8000/api/branches', {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+        const branches = response.data;
+
+        // Corrected to target the table instead of the div
+        const branchesTable = document.getElementById('branchesTable');
+        
+        // Clear previous rows except headers
+        branchesTable.innerHTML = `
+            <tr>
+                <th>اسم الفرع</th>
+                <th>العنوان</th>
+            </tr>
+        `;
+
+        // Populate the table with branch data
+        branches.forEach(branch => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${branch.name}</td>
+                <td><a href="${branch.location}" target="_blank"><button>Visit Location</button></a></td>
+            `;
+            branchesTable.appendChild(row);
+        });
+    } catch (error) {
+        console.error('Error fetching branches:', error);
+    }
+}
+fetchBranch();
+</script>
 
         <!--End of bus-->
 
@@ -447,9 +498,7 @@ header .Login:hover {
 
     </div>
 
-
-
-
+   
     <button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
     <script src="js/index.js"></script>
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
